@@ -1,0 +1,33 @@
+import boto3
+import json
+
+
+    
+
+def lambda_handler(event, context):
+
+    __TableName__ = "result_table"
+    Primary_Column_Name = 'EnrollmentID'
+    Primary_Key = 1
+    columns=["Exam","Result", "Sub1"]
+
+    client = boto3.client('dynamodb')
+
+    DB =     boto3.resource('dynamodb')
+    table = DB.Table(__TableName__)
+
+
+
+    from boto3.dynamodb.conditions import Key, Attr
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('result_table')
+
+    response = table.scan(
+    FilterExpression=Attr('EnrollmentID').eq('EI00002')
+    )
+
+    for x in response["Items"]:
+        print(x)
+    
+    return response
+    
